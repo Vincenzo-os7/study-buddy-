@@ -18,9 +18,17 @@
 *.pem
 
 # debug
+debug.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# test reports
+test-results/
+playwright-report/
+
+# supabase temporary files
+supabase/.temp/
 
 # local env files
 .env*.local
