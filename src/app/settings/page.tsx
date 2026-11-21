@@ -92,7 +92,7 @@ export default function SettingsPage() {
       </header>
 
       {/* Main Settings Form */}
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8">
+      <main id="main-content" className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8">
         <form onSubmit={handleSave} className="space-y-6">
           {/* Target Track & Domain Selection */}
           <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4">
@@ -103,10 +103,16 @@ export default function SettingsPage() {
               Switching domains reconfigures your active prerequisite skill dependency graph.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div
+              role="radiogroup"
+              aria-label="Active Learning Domain"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2"
+            >
               {DOMAINS.map((d) => (
                 <button
                   type="button"
+                  role="radio"
+                  aria-checked={targetDomain === d.id}
                   key={d.id}
                   onClick={() => setTargetDomain(d.id)}
                   className={`p-4 rounded-2xl border text-left transition-all ${
@@ -133,14 +139,20 @@ export default function SettingsPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
               <div>
-                <label className="text-xs text-slate-400 block mb-1.5 font-medium">
+                <label htmlFor="weekly-hours-input" className="text-xs text-slate-400 block mb-1.5 font-medium">
                   Weekly Study Target (Hours)
                 </label>
                 <div className="flex items-center gap-3">
                   <input
+                    id="weekly-hours-input"
                     type="range"
                     min="1"
                     max="20"
+                    aria-label="Weekly study target in hours"
+                    aria-valuemin={1}
+                    aria-valuemax={20}
+                    aria-valuenow={weeklyHours}
+                    aria-valuetext={`${weeklyHours} hours per week`}
                     value={weeklyHours}
                     onChange={(e) => setWeeklyHours(Number(e.target.value))}
                     className="flex-1 accent-indigo-500 cursor-pointer"
@@ -152,13 +164,15 @@ export default function SettingsPage() {
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 block mb-1.5 font-medium">
+                <label htmlFor="experience-level-select" className="text-xs text-slate-400 block mb-1.5 font-medium">
                   Self-Reported Experience
                 </label>
                 <select
+                  id="experience-level-select"
+                  aria-label="Self-Reported Experience Level"
                   value={currentLevel}
                   onChange={(e) => setCurrentLevel(e.target.value as "beginner" | "intermediate" | "advanced")}
-                  className="w-full bg-slate-950 text-white text-xs rounded-xl p-2.5 border border-slate-800"
+                  className="w-full bg-slate-950 text-white text-xs rounded-xl p-2.5 border border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-400"
                 >
                   <option value="beginner">Beginner (Starting with Foundations)</option>
                   <option value="intermediate">Intermediate (Familiar with Core Math & Syntax)</option>

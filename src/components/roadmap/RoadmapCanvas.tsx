@@ -116,7 +116,12 @@ export function RoadmapCanvas({
   }, [edges, nodes]);
 
   return (
-    <div className="w-full h-[620px] rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden relative shadow-inner">
+    <div
+      role="region"
+      aria-label="Interactive Skill Dependency Roadmap Canvas. Switch to Accessible List View for structured screen-reader navigation."
+      tabIndex={0}
+      className="w-full h-[620px] rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden relative shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    >
       <ReactFlow
         nodes={flowNodes}
         edges={flowEdges}

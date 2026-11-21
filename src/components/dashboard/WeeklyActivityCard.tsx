@@ -27,11 +27,20 @@ export function WeeklyActivityCard() {
         </div>
 
         {/* Visual Bar Chart */}
-        <div className="grid grid-cols-7 gap-2 h-32 items-end pt-4 pb-2">
+        <div
+          role="figure"
+          aria-label="Weekly study activity chart"
+          className="grid grid-cols-7 gap-2 h-32 items-end pt-4 pb-2"
+        >
           {WEEKLY_ACTIVITY_DEMO.map((day) => {
             const heightPercent = Math.min(100, Math.round((day.minutes / maxMinutes) * 100));
             return (
-              <div key={day.day} className="flex flex-col items-center gap-2 h-full justify-end group">
+              <div
+                key={day.day}
+                role="img"
+                aria-label={`${day.day}: ${day.minutes} minutes studied`}
+                className="flex flex-col items-center gap-2 h-full justify-end group"
+              >
                 <span className="text-[10px] text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity">
                   {day.minutes}m
                 </span>

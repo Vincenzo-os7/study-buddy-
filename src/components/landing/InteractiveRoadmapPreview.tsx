@@ -166,10 +166,17 @@ export function InteractiveRoadmapPreview() {
         </div>
 
         {/* Domain Selector Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+        <div
+          role="tablist"
+          aria-label="Select Learning Track"
+          className="flex flex-wrap items-center justify-center gap-2 mb-10"
+        >
           {SAMPLE_DOMAINS.map((domain) => (
             <button
               key={domain.id}
+              role="tab"
+              id={`domain-tab-${domain.id}`}
+              aria-selected={selectedDomain === domain.id}
               onClick={() => setSelectedDomain(domain.id)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 selectedDomain === domain.id
@@ -222,6 +229,8 @@ export function InteractiveRoadmapPreview() {
                           <button
                             key={node.id}
                             onClick={() => setSelectedNodeId(node.id)}
+                            aria-pressed={isSelected}
+                            aria-label={`${node.name}, ${node.status}, Stage ${node.stage}`}
                             className={`w-full text-left p-4 rounded-xl border transition-all relative ${
                               isSelected
                                 ? "bg-slate-850 border-indigo-500 shadow-glow ring-1 ring-indigo-500/50"
@@ -337,8 +346,12 @@ export function InteractiveRoadmapPreview() {
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                   Adaptive AI Companion
                 </span>
-                <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+                <div role="tablist" aria-label="Explanation Perspective" className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
                   <button
+                    role="tab"
+                    id="preview-tab-simple"
+                    aria-selected={activeTab === "simple"}
+                    aria-controls="preview-panel-explanation"
                     onClick={() => setActiveTab("simple")}
                     className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-colors ${
                       activeTab === "simple"
@@ -349,6 +362,10 @@ export function InteractiveRoadmapPreview() {
                     Simple (ELI5)
                   </button>
                   <button
+                    role="tab"
+                    id="preview-tab-analogy"
+                    aria-selected={activeTab === "analogy"}
+                    aria-controls="preview-panel-explanation"
                     onClick={() => setActiveTab("analogy")}
                     className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-colors ${
                       activeTab === "analogy"
@@ -361,7 +378,12 @@ export function InteractiveRoadmapPreview() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+              <div
+                role="tabpanel"
+                id="preview-panel-explanation"
+                aria-labelledby={`preview-tab-${activeTab}`}
+                className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 leading-relaxed"
+              >
                 {activeTab === "simple" ? (
                   <p>“{selectedNode.explanationSnippet.simple}”</p>
                 ) : (

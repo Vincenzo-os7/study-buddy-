@@ -7,6 +7,17 @@ import { Network, Sparkles, Menu, X, ArrowRight, BookOpen, Compass, Shield } fro
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Close mobile drawer on Escape key (WCAG 2.1.2 No Keyboard Trap)
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,10 +77,12 @@ export function Navbar() {
           <div className="flex md:hidden">
             <button
               type="button"
+              id="mobile-menu-button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-slate-400 hover:text-white hover:bg-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -79,7 +92,12 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-800 bg-slate-950 px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-2 duration-150">
+        <div
+          id="mobile-nav-menu"
+          role="region"
+          aria-labelledby="mobile-menu-button"
+          className="md:hidden border-b border-slate-800 bg-slate-950 px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-2 duration-150"
+        >
           <div className="flex flex-col space-y-2 text-sm font-medium text-slate-200">
             <a
               href="#roadmap-preview"

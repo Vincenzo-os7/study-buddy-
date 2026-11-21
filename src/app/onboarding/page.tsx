@@ -112,7 +112,7 @@ export default function OnboardingAssessmentPage() {
       </header>
 
       {/* Main Flow Content */}
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-10 flex flex-col justify-center">
+      <main id="main-content" className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-10 flex flex-col justify-center">
         {/* Step 1: Intro */}
         {currentStep === "intro" && (
           <div className="p-8 sm:p-12 rounded-3xl bg-slate-900 border border-slate-800 shadow-card text-center space-y-6">
@@ -164,8 +164,12 @@ export default function OnboardingAssessmentPage() {
         {/* Step 2: Quiz In Progress */}
         {currentStep === "quiz" && (
           <div className="p-8 sm:p-10 rounded-3xl bg-slate-900 border border-slate-800 shadow-card space-y-6">
-            {/* Progress counter */}
-            <div className="flex items-center justify-between text-xs text-slate-400 pb-4 border-b border-slate-800">
+            {/* Progress counter with ARIA live announcement */}
+            <div
+              className="flex items-center justify-between text-xs text-slate-400 pb-4 border-b border-slate-800"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <span className="font-semibold text-indigo-300">
                 Question {currentQuestionIndex + 1} of {totalQuestions}
               </span>
@@ -178,20 +182,28 @@ export default function OnboardingAssessmentPage() {
               value={Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100)}
               showPercentage={false}
               color="brand"
+              label={`Progress: question ${currentQuestionIndex + 1} of ${totalQuestions}`}
             />
 
             {/* Question Text */}
-            <h2 className="text-xl sm:text-2xl font-bold text-white leading-snug">
+            <h2 id="diagnostic-question-title" className="text-xl sm:text-2xl font-bold text-white leading-snug">
               {currentQuestion.question}
             </h2>
 
-            {/* Options */}
-            <div className="space-y-3 pt-2">
+            {/* Options Grouped Semantically */}
+            <div
+              role="radiogroup"
+              aria-labelledby="diagnostic-question-title"
+              className="space-y-3 pt-2"
+            >
               {currentQuestion.options.map((option, idx) => {
                 const isSelected = submissions[currentQuestion.id] === idx;
                 return (
                   <button
                     key={idx}
+                    type="button"
+                    role="radio"
+                    aria-checked={isSelected}
                     data-testid={`option-${idx}`}
                     onClick={() => handleSelectOption(currentQuestion.id, idx)}
                     className={`w-full text-left p-4 rounded-2xl border transition-all flex items-center justify-between gap-4 ${

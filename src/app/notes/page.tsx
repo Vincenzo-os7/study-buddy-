@@ -164,7 +164,7 @@ export default function NotesPage() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 space-y-6">
+      <main id="main-content" className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 space-y-6">
         {/* Search & Filter Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
           <div className="relative flex-1">

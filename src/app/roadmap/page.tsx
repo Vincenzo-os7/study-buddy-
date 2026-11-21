@@ -108,7 +108,7 @@ export default function RoadmapPage() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      <main id="main-content" className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Rationale & Next Step Banner */}
         {roadmapData.nextRecommendedSkillId && (
           <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border border-indigo-500/40 shadow-glow flex flex-col sm:flex-row sm:items-center justify-between gap-4">

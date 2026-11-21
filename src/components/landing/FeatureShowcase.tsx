@@ -35,8 +35,16 @@ export function FeatureShowcase() {
         </div>
 
         {/* Feature Navigation Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
+        <div
+          role="tablist"
+          aria-label="Core Educational Features"
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12"
+        >
           <button
+            role="tab"
+            id="feature-tab-dag"
+            aria-selected={activeTab === "dag"}
+            aria-controls="feature-panel-dag"
             onClick={() => setActiveTab("dag")}
             className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
               activeTab === "dag"
@@ -49,6 +57,10 @@ export function FeatureShowcase() {
           </button>
 
           <button
+            role="tab"
+            id="feature-tab-ai"
+            aria-selected={activeTab === "ai"}
+            aria-controls="feature-panel-ai"
             onClick={() => setActiveTab("ai")}
             className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
               activeTab === "ai"
@@ -61,6 +73,10 @@ export function FeatureShowcase() {
           </button>
 
           <button
+            role="tab"
+            id="feature-tab-diagnostic"
+            aria-selected={activeTab === "diagnostic"}
+            aria-controls="feature-panel-diagnostic"
             onClick={() => setActiveTab("diagnostic")}
             className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
               activeTab === "diagnostic"
@@ -73,6 +89,10 @@ export function FeatureShowcase() {
           </button>
 
           <button
+            role="tab"
+            id="feature-tab-motivation"
+            aria-selected={activeTab === "motivation"}
+            aria-controls="feature-panel-motivation"
             onClick={() => setActiveTab("motivation")}
             className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
               activeTab === "motivation"
@@ -86,7 +106,12 @@ export function FeatureShowcase() {
         </div>
 
         {/* Active Tab Card Content */}
-        <div className="rounded-3xl bg-slate-950 border border-slate-800 p-8 sm:p-12 shadow-card">
+        <div
+          role="tabpanel"
+          id={`feature-panel-${activeTab}`}
+          aria-labelledby={`feature-tab-${activeTab}`}
+          className="rounded-3xl bg-slate-950 border border-slate-800 p-8 sm:p-12 shadow-card"
+        >
           {activeTab === "dag" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               <div className="space-y-6">

@@ -103,7 +103,7 @@ export default function SkillWorkspacePage() {
       </header>
 
       {/* Main Workspace */}
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8">
+      <main id="main-content" className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 space-y-8">
         {/* Skill Hero Bar */}
         <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1 max-w-2xl">
@@ -142,8 +142,16 @@ export default function SkillWorkspacePage() {
               <h3 className="text-lg font-bold text-white">Adaptive Concept Explanations</h3>
             </div>
 
-            <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <div
+              role="tablist"
+              aria-label="Cognitive Perspectives"
+              className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs"
+            >
               <button
+                role="tab"
+                id="perspective-tab-standard"
+                aria-selected={activeTab === "standard"}
+                aria-controls="perspective-panel-content"
                 onClick={() => setActiveTab("standard")}
                 className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
                   activeTab === "standard" ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
@@ -152,6 +160,10 @@ export default function SkillWorkspacePage() {
                 Standard
               </button>
               <button
+                role="tab"
+                id="perspective-tab-simple"
+                aria-selected={activeTab === "simple"}
+                aria-controls="perspective-panel-content"
                 onClick={() => setActiveTab("simple")}
                 className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
                   activeTab === "simple" ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
@@ -160,6 +172,10 @@ export default function SkillWorkspacePage() {
                 ELI5 (Simple)
               </button>
               <button
+                role="tab"
+                id="perspective-tab-analogy"
+                aria-selected={activeTab === "analogy"}
+                aria-controls="perspective-panel-content"
                 onClick={() => setActiveTab("analogy")}
                 className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
                   activeTab === "analogy" ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
@@ -168,6 +184,10 @@ export default function SkillWorkspacePage() {
                 Analogy
               </button>
               <button
+                role="tab"
+                id="perspective-tab-worked"
+                aria-selected={activeTab === "worked"}
+                aria-controls="perspective-panel-content"
                 onClick={() => setActiveTab("worked")}
                 className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
                   activeTab === "worked" ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
@@ -178,7 +198,12 @@ export default function SkillWorkspacePage() {
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800/80 text-sm text-slate-200 leading-relaxed min-h-[160px]">
+          <div
+            role="tabpanel"
+            id="perspective-panel-content"
+            aria-labelledby={`perspective-tab-${activeTab}`}
+            className="p-6 rounded-2xl bg-slate-950 border border-slate-800/80 text-sm text-slate-200 leading-relaxed min-h-[160px]"
+          >
             {activeTab === "standard" && (
               <div className="space-y-4">
                 <p className="leading-relaxed">{skill.explanation.standard}</p>
@@ -257,7 +282,11 @@ export default function SkillWorkspacePage() {
 
           <h4 className="text-sm font-bold text-white">{practiceQuestion.question}</h4>
 
-          <div className="space-y-2.5">
+          <div
+            role="radiogroup"
+            aria-label="Practice quiz options"
+            className="space-y-2.5"
+          >
             {practiceQuestion.options.map((opt, idx) => {
               const isSelected = selectedQuizOption === idx;
               let style = "bg-slate-950 border-slate-800 hover:border-slate-700";
@@ -274,6 +303,9 @@ export default function SkillWorkspacePage() {
               return (
                 <button
                   key={idx}
+                  type="button"
+                  role="radio"
+                  aria-checked={isSelected}
                   disabled={quizSubmitted}
                   onClick={() => setSelectedQuizOption(idx)}
                   className={`w-full text-left p-3.5 rounded-xl border text-xs transition-all flex items-center justify-between ${style}`}
@@ -330,6 +362,7 @@ export default function SkillWorkspacePage() {
             <textarea
               rows={3}
               value={userNote}
+              aria-label={`Personal reflection note for ${skill.name}`}
               onChange={(e) => setUserNote(e.target.value)}
               placeholder="Jot down personal insights, formulas, or questions for spaced revision..."
               className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-400"

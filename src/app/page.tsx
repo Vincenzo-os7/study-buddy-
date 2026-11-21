@@ -14,7 +14,7 @@ export default function Home() {
       {/* 1. Global Navigation Bar */}
       <Navbar />
 
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {/* 2. Hero Section with Requested Headline and CTAs */}
         <Hero />
 

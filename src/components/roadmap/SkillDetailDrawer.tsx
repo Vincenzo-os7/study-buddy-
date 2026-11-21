@@ -32,6 +32,15 @@ export function SkillDetailDrawer({
   const [activeTab, setActiveTab] = useState<"standard" | "simple" | "analogy">("standard");
   const [markingMastered, setMarkingMastered] = useState(false);
 
+  // Keyboard Escape listener (WCAG 2.1.2)
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   if (!skill) return null;
 
   const handleSimulateMastery = () => {
@@ -44,12 +53,20 @@ export function SkillDetailDrawer({
   };
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="skill-title"
-      className="fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-slate-950 border-l border-slate-800 shadow-2xl p-6 overflow-y-auto animate-in slide-in-from-right duration-200"
-    >
+    <>
+      {/* Accessible Backdrop Overlay */}
+      <div
+        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="skill-drawer-title"
+        className="fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-slate-950 border-l border-slate-800 shadow-2xl p-6 overflow-y-auto animate-in slide-in-from-right duration-200"
+      >
       {/* Header */}
       <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
         <div className="flex items-center gap-2">
@@ -68,7 +85,7 @@ export function SkillDetailDrawer({
       </div>
 
       {/* Title & Description */}
-      <h2 id="skill-title" className="text-2xl font-bold text-white mb-2">
+      <h2 id="skill-drawer-title" className="text-2xl font-bold text-white mb-2">
         {skill.name}
       </h2>
       <p className="text-sm text-slate-300 leading-relaxed mb-6">
@@ -205,5 +222,6 @@ export function SkillDetailDrawer({
         )}
       </div>
     </div>
+    </>
   );
 }

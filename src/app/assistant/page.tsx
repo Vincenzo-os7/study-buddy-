@@ -215,6 +215,7 @@ export default function AssistantPage() {
             <select
               value={selectedSkillId}
               onChange={(e) => setSelectedSkillId(e.target.value)}
+              aria-label="Select target skill for discussion"
               className="bg-slate-950 text-white font-semibold text-xs rounded-lg px-2.5 py-1 border border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-400"
             >
               {ML_SKILLS.map((s) => (
@@ -242,8 +243,14 @@ export default function AssistantPage() {
       </div>
 
       {/* Chat Messages Stream */}
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-6 flex flex-col justify-between overflow-y-auto">
-        <div className="space-y-6 flex-1">
+      <main id="main-content" className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-6 flex flex-col justify-between overflow-y-auto">
+        <div
+          role="log"
+          aria-live="polite"
+          aria-relevant="additions text"
+          aria-label="AI Conversation History"
+          className="space-y-6 flex-1"
+        >
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -408,7 +415,11 @@ export default function AssistantPage() {
         {/* Action Shortcuts & Input Form */}
         <div className="mt-6 pt-4 border-t border-slate-800 space-y-3">
           {/* Quick Action Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
+          <div
+            role="toolbar"
+            aria-label="Quick AI Prompts"
+            className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar"
+          >
             {ACTION_PILLS.map((pill) => {
               const Icon = pill.icon;
               return (
@@ -438,6 +449,7 @@ export default function AssistantPage() {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder={`Ask a question about ${selectedSkill.name}...`}
+              aria-label={`Ask a question about ${selectedSkill.name}`}
               className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <button

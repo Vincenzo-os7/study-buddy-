@@ -63,7 +63,7 @@ export default function DashboardPage() {
       <div className="flex-1 flex flex-col min-w-0">
         <DashboardHeader learner={learner} />
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 max-w-7xl">
+        <main id="main-content" className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 max-w-7xl">
           {/* Top Overview Strip */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Student Profile Card */}

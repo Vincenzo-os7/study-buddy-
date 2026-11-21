@@ -68,7 +68,10 @@ export const CustomSkillNode = memo(({ data }: NodeProps) => {
 
   return (
     <div
-      className={`relative w-64 rounded-2xl border-2 p-4 transition-all duration-200 cursor-pointer ${statusConfig.border} ${statusConfig.bg} ${statusConfig.glow} hover:scale-[1.02]`}
+      role="button"
+      tabIndex={0}
+      aria-label={`${nodeData.name}, Stage ${nodeData.stage}, ${statusConfig.label}`}
+      className={`relative w-64 rounded-2xl border-2 p-4 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-400 ${statusConfig.border} ${statusConfig.bg} ${statusConfig.glow} hover:scale-[1.02]`}
     >
       {/* Target input handle (left) */}
       <Handle
